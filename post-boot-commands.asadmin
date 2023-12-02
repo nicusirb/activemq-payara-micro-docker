@@ -6,5 +6,4 @@ create-connector-connection-pool  --raname activemq-rar --connectiondefinition j
 create-connector-resource --poolname jms/ConnectionPool jms/ConnectionFactory
 
 create-admin-object --raname activemq-rar --restype javax.jms.Queue --property PhysicalName=TESTQ jms/TESTQ
-
-deploy --name TestQ /opt/payara/app/TestQ/target/activemq-listener-1.0-SNAPSHOT.jar
+deploy --name TestQ /opt/payara/app/activemq-listener/target/activemq-listener-1.0-SNAPSHOT.jar
