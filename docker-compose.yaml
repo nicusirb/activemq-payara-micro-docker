@@ -1,0 +1,40 @@
+---
+# docker-compose amq
+version: "3.9"
+
+networks:
+ amq_net:
+
+services:
+ ###############
+ ## Active MQ ##
+ ###############
+ amq:
+  image: apache/activemq-artemis:latest-alpine
+  container_name: amq
+  volumes:
+   - /etc/localtime:/etc/localtime:ro
+  networks:
+   - amq_net
+  ports:
+   - 8161:8161 # GUI
+  expose:
+   - 61616 # MQ TCP
+
+ #########################
+ ## Payara Micro TestMQ ##
+ #########################
+ pmicro_testmq:
+  image: payara/micro:5.2022.5
+  container_name: pmicro_testmq
+  volumes:
+   - /etc/localtime:/etc/localtime:ro
+   - /mnt/d/DockerZaMaster/payara_micro_amq:/opt/payara/app
+  networks:
+   - amq_net
+  environment:
+   - JVM_ARGS=-Xmx512m -Xms512m
+  command:
+   - --postbootcommandfile
+   - /opt/payara/app/post-boot-commands.asadmin
+   
